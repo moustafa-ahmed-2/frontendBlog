@@ -17,7 +17,7 @@ export default function CategoriesBar(
 
     <div className='w-full flex flex-wrap gap-3 justify-center    mb-8 '>
         {categories?.map((cat)=> (
-            <button
+            <button key={cat}
             className={`px-4 py-2 rounded-full font-medium transition-all
                 ${selectedCategory === cat ?
                      "bg-linear-to-r border-amber-50  text-white from-sky-400 to-cyan-400  shadow-md " : 

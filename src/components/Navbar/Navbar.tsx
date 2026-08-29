@@ -29,146 +29,142 @@ export default function Navbar() {
  
  const {user , logout} = useAuth();
  
- 
  return (
-<Disclosure as="nav" className="backdrop-blur-md bg-white/60 border-b border-blue-100 fixed w-full z-50">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          {/* Mobile Menu */}
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
-              <MenuIcon
-                aria-hidden="true"
-                className="block size-6 group-data-open:hidden"
-              />
-              <X
-                aria-hidden="true"
-                className="hidden size-6 group-data-open:block"
-              />
-            </DisclosureButton>
-          </div>
+  <Disclosure
+    as="nav"
+    className="fixed top-0 z-50 w-full border-b border-blue-100 bg-white/60 backdrop-blur-md"
+  >
+    {({ open }) => (
+      <>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative flex h-16 items-center justify-between">
 
-          {/* Logo */}
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="./Logo.jfif"
-               className="h-16 w-auto object-contain Logo "
-              />
+            {/* Mobile Menu Button */}
+            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <DisclosureButton className="inline-flex items-center justify-center rounded-md p-2 text-sky-700 hover:bg-sky-50 focus:outline-none">
+                <span className="sr-only">Open main menu</span>
+
+                {open ? (
+                  <X className="size-6" />
+                ) : (
+                  <MenuIcon className="size-6" />
+                )}
+              </DisclosureButton>
             </div>
 
-            <div className="hidden sm:ml-6 sm:block">
-  <div className="flex space-x-2 mt-4">
-    {navigation.map((item) => (
-     <a
-  key={item.name}
-  href={item.href}
-  aria-current={item.current ? "page" : undefined}
-  className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 
-    `}
-  style={{
-    color: item.current ? "#0c4a6e" : "#0c4a6e", 
-  }}
->
-  {item.name}
-</a>
-    ))}
-  </div>
-</div>
+            {/* Logo + Desktop Navigation */}
+            <div className="flex flex-1 items-center justify-center sm:justify-start">
 
-          </div>
+              {/* Logo */}
+              <Link to="/" className="flex shrink-0 items-center">
+                <img
+                  alt="Logo"
+                  src="./Logo.jfif"
+                  className="h-12 hidden md:flex w-auto object-contain sm:h-14 lg:h-16"
+                />
+              </Link>
 
-          {/* Notification and Image Profile */}
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-   
+              {/* Desktop Navigation */}
+              <div className="hidden sm:ml-6 sm:block">
+                <div className="flex items-center gap-1 lg:gap-2">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      aria-current={item.current ? "page" : undefined}
+                      className="rounded-lg px-2 py-2 text-sm font-medium text-sky-900 transition-colors duration-200 hover:bg-sky-50 hover:text-sky-700 lg:px-3"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-  {!user ? (
-  <div className="flex items-center space-x-3">
-    <Link
-      to="/login"
-       style={{ "color" : "#0c4a6e" }}
-      className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-linear-to-r from-green-100 to-yellow-50 shadow-sm "
-    >
-      Login
-    </Link>
-    <Link
-      to="/register"
-       style={{ "color" : "#0c4a6e" }}
-      className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-linear-to-r from-green-100 to-yellow-50 shadow-sm "
-    >
-      Sign Up
-    </Link>
-  </div>
-) : (
-  <Menu as="div" className="relative ml-3">
-    <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500">
-      <span className="sr-only">Open user menu</span>
-      <img
-        alt={user.name}
-        src={
-         
-          "https://ui-avatars.com/api/?name=" +
-            encodeURIComponent(user.name)
-        }
-        className="size-8 rounded-full bg-sky-100 border border-sky-200 shadow-sm"
-      />
-    </MenuButton>
+            {/* Right Side */}
+            <div className="flex items-center">
 
-    <MenuItems
-      transition
-      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white/80 backdrop-blur-md py-2 shadow-lg ring-1 ring-sky-100 transition"
-    >
-      <MenuItem>
-        <Link
-          to="/profile"
-          className="block px-4 py-2 text-sm text-sky-700 hover:bg-sky-50 hover:text-sky-900 rounded-md transition"
-        >
-          Your Profile
-        </Link>
-      </MenuItem>
-      <MenuItem>
-        <button
-         onClick={logout}
-          className="w-full text-left block px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 hover:text-rose-800 rounded-md transition"
-        >
-          Sign out
-        </button>
-      </MenuItem>
-    </MenuItems>
-  </Menu>
-)}
+              {!user ? (
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Link
+                    to="/login"
+                    className="rounded-lg bg-gradient-to-r from-green-100 to-yellow-50 px-3 py-2 text-xs font-medium text-sky-900 shadow-sm transition hover:shadow-md sm:px-4 sm:text-sm"
+                  >
+                    Login
+                  </Link>
 
+                  <Link
+                    to="/register"
+                    className="rounded-lg bg-gradient-to-r from-green-100 to-yellow-50 px-3 py-2 text-xs font-medium text-sky-900 shadow-sm transition hover:shadow-md sm:px-4 sm:text-sm"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              ) : (
+                <Menu as="div" className="relative ml-2">
+                  <MenuButton className="relative flex rounded-full focus:outline-none">
+                    <span className="sr-only">Open user menu</span>
 
-            
-          </div>
-        </div>
-      </div>
+                    <img
+                      alt={user.name}
+                      src={
+                        "https://ui-avatars.com/api/?name=" +
+                        encodeURIComponent(user.name)
+                      }
+                      className="size-8 rounded-full border border-sky-200 bg-sky-100 shadow-sm sm:size-9"
+                    />
+                  </MenuButton>
 
-      {/* قائمة الموبايل */}
-      <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-white/5 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
+                  <MenuItems
+                    transition
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white/90 py-2 shadow-lg ring-1 ring-sky-100 backdrop-blur-md"
+                  >
+                    <MenuItem>
+                      <Link
+                        to="/profile"
+                        className="block rounded-md px-4 py-2 text-sm text-sky-700 transition hover:bg-sky-50 hover:text-sky-900"
+                      >
+                        Your Profile
+                      </Link>
+                    </MenuItem>
+
+                    <MenuItem>
+                      <button
+                        onClick={logout}
+                        className="block w-full rounded-md px-4 py-2 text-left text-sm text-rose-600 transition hover:bg-rose-50 hover:text-rose-800"
+                      >
+                        Sign out
+                      </button>
+                    </MenuItem>
+                  </MenuItems>
+                </Menu>
               )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
+            </div>
+          </div>
         </div>
-      </DisclosurePanel>
-    </Disclosure>
-  );
+
+        {/* Mobile Navigation */}
+        <DisclosurePanel className="border-t border-blue-100 bg-white/95 backdrop-blur-md sm:hidden">
+          <div className="space-y-1 px-4 pb-4 pt-3">
+            {navigation.map((item) => (
+              <DisclosureButton
+                key={item.name}
+                as={Link}
+                to={item.href}
+                className={`block w-full rounded-lg px-3 py-2 text-left text-base font-medium transition ${
+                  item.current
+                    ? "bg-sky-100 text-sky-900"
+                    : "text-sky-700 hover:bg-sky-50"
+                }`}
+              >
+                {item.name}
+              </DisclosureButton>
+            ))}
+          </div>
+        </DisclosurePanel>
+      </>
+    )}
+  </Disclosure>
+);
 }
 

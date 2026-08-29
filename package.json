@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node init && vite",
+    "build": "node init && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -13,7 +13,9 @@
     "@headlessui/react": "^2.2.10",
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.19.0",
+    "dotenv": "^8.2.0",
     "lucide-react": "^1.32.0",
+    "node-fetch": "^3.3.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hot-toast": "^2.6.0",
